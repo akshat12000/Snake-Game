@@ -3,6 +3,7 @@ from score_manager import ScoreManager
 from snake import Snake
 from food import Food
 from game_display import GameDisplay
+from sound_manager import SoundManager
 
 class SnakeGame:
     def __init__(self):
@@ -18,6 +19,7 @@ class SnakeGame:
         self.food = None
         self.display = None
         self.score_manager = None
+        self.sound_manager = None
 
     def go_up(self):
         """Change snake direction to up"""
@@ -40,16 +42,19 @@ class SnakeGame:
         # Check boundary collision
         if self.snake.get_position()[0] > self.BOUNDARY or self.snake.get_position()[0] < -self.BOUNDARY or self.snake.get_position()[1] > self.BOUNDARY or self.snake.get_position()[1] < -self.BOUNDARY:
             print("Game Over!")
+            self.sound_manager.play_game_over_sound()
             return True
         
         # Check self-collision
         if self.snake.check_self_collision():
             print("Game Over! You ran into yourself.")
+            self.sound_manager.play_game_over_sound()
             return True
 
         # Check food collision
         if self.snake.head.distance(self.food.get_food()) < 20:
             print("Yum! Food eaten.")
+            self.sound_manager.play_eat_sound()
             self.score += 1
             self.display.update_score(self.score)
             self.snake.add_segment()
@@ -87,6 +92,7 @@ class SnakeGame:
         self.snake = Snake()
         self.food = Food()
         self.score_manager = ScoreManager()
+        self.sound_manager = SoundManager()
 
         # Create score display
         self.display.create_score_display()
@@ -102,8 +108,15 @@ class SnakeGame:
 
         is_new_record = self.score_manager.save_high_score(self.score)
 
+        # Add this celebration sound for new records!
+        if is_new_record:
+            self.sound_manager.play_new_record_sound()
+
         # Show beautiful game over screen
         self.display.show_game_over(self.score, self.score_manager.get_high_score(), is_new_record)
+
+        # Cleanup sound system
+        self.sound_manager.cleanup()
 
 if __name__ == "__main__":
     game = SnakeGame()
