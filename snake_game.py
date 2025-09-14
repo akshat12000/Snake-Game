@@ -52,8 +52,14 @@ class SnakeGame:
             self.display.update_score(self.score)
             self.snake.add_segment()
             self.food.relocate(self.BOUNDARY)
+            self.update_game_speed()
 
         return False
+    
+    def update_game_speed(self):
+        """Increase speed based on score"""
+        # Start at 0.1, get 10% faster every 5 points
+        self.GAME_SPEED = max(0.03, 0.1 - (self.score // 5) * 0.01)
 
     def game_loop(self):
         """Main game loop"""
