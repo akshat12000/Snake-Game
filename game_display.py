@@ -1,5 +1,5 @@
 import turtle
-from score_manager import ScoreManager
+import os
 
 class GameDisplay:
     def __init__(self, width=600, height=600):
@@ -15,6 +15,20 @@ class GameDisplay:
         self.window.bgcolor("white")
         self.window.setup(width=self.WINDOW_WIDTH, height=self.WINDOW_HEIGHT)
         self.window.tracer(0)
+
+        # Set custom icon for the window
+        try:
+            # Check if icon file exists
+            icon_path = "snake_icon.ico"
+            if os.path.exists(icon_path):
+                # Get the underlying tkinter window and set the icon
+                root = self.window.getcanvas().winfo_toplevel()
+                root.iconbitmap(icon_path)
+            else:
+                print("Warning: snake_icon.ico not found. Using default icon.")
+        except Exception as e:
+            print(f"Warning: Could not set window icon: {e}")
+
         return self.window
     
     def get_height(self):
