@@ -50,7 +50,6 @@ This project showcases **production-ready software architecture** with complete 
 ├── 🎨 snake_icon.py         → Custom icon generation script
 ├── 📄 high_score.txt        → Persistent high score storage
 ├── 🔧 SnakeGame.spec        → PyInstaller configuration for executable creation
-├── 📁 build/                → PyInstaller build artifacts
 ├── 📁 dist/                 → Generated standalone executable
 ├── 🖼️ snake_icon.ico        → Custom application icon
 ├── 📁 .venv/                → Virtual environment with dependencies
