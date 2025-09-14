@@ -1,4 +1,5 @@
 import time
+from score_manager import ScoreManager
 from snake import Snake
 from food import Food
 from game_display import GameDisplay
@@ -16,6 +17,7 @@ class SnakeGame:
         self.snake = None
         self.food = None
         self.display = None
+        self.score_manager = None
 
     def go_up(self):
         """Change snake direction to up"""
@@ -84,19 +86,24 @@ class SnakeGame:
         
         self.snake = Snake()
         self.food = Food()
+        self.score_manager = ScoreManager()
 
         # Create score display
         self.display.create_score_display()
+        self.display.create_high_score_display()
         self.display.update_score(self.score) # Initial score display
-        
+        self.display.update_high_score_display(self.score_manager.get_high_score()) # Initial high score display
+
         # Set up controls
         self.display.setup_controls(self.go_up, self.go_down, self.go_left, self.go_right)
         
         # Start the game loop
         self.game_loop()
 
+        is_new_record = self.score_manager.save_high_score(self.score)
+
         # Show beautiful game over screen
-        self.display.show_game_over(self.score)
+        self.display.show_game_over(self.score, self.score_manager.get_high_score(), is_new_record)
 
 if __name__ == "__main__":
     game = SnakeGame()
