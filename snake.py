@@ -65,3 +65,10 @@ class Snake:
 
         if len(self.body) > 0:
             self.body[0].goto(head_x, head_y)
+
+    def check_self_collision(self):
+        """Check if snake head hits its own body"""
+        for segment in self.body:
+            if self.head.distance(segment) < 15:  # Slightly smaller than food collision
+                return True
+        return False

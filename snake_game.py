@@ -1,4 +1,3 @@
-import turtle
 import time
 from snake import Snake
 from food import Food
@@ -36,10 +35,17 @@ class SnakeGame:
 
     def check_collisions(self):
         """Check for collisions with boundaries and food"""
+        # Check boundary collision
         if self.snake.get_position()[0] > self.BOUNDARY or self.snake.get_position()[0] < -self.BOUNDARY or self.snake.get_position()[1] > self.BOUNDARY or self.snake.get_position()[1] < -self.BOUNDARY:
             print("Game Over!")
             return True
+        
+        # Check self-collision
+        if self.snake.check_self_collision():
+            print("Game Over! You ran into yourself.")
+            return True
 
+        # Check food collision
         if self.snake.head.distance(self.food.get_food()) < 20:
             print("Yum! Food eaten.")
             self.score += 1
