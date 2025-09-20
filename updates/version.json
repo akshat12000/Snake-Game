@@ -1,7 +1,7 @@
 {
-  "version": "2.0.4",
-  "build": "006",
-  "release_date": "2025-09-20T23:55:49.195497",
+  "version": "2.0.5",
+  "build": "007",
+  "release_date": "2025-09-21T00:00:45.818151",
   "features": [
     "Classic Snake gameplay with smooth controls",
     "Professional stereo audio system",
@@ -12,6 +12,13 @@
     "Custom window branding"
   ],
   "changelog": [
+    {
+      "version": "2.0.5",
+      "date": "2025-09-21",
+      "changes": [
+        "Title changed -> Snake Game V2"
+      ]
+    },
     {
       "version": "2.0.4",
       "date": "2025-09-20",
