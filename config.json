@@ -1,5 +1,5 @@
 {
-    "update_server_url": "http://localhost:5000",
+    "update_server_url": "https://web-production-7380.up.railway.app",
     "check_interval": 300,
     "auto_download": false,
     "notification_enabled": true

@@ -42,3 +42,6 @@ Thumbs.db
 # Distribution files (but keep snake_icon.ico)
 *.msi
 *.dmg
+
+# Environment files
+.env
