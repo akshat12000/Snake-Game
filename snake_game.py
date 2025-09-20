@@ -1,9 +1,21 @@
 import time
+import threading
 from score_manager import ScoreManager
 from snake import Snake
 from food import Food
 from game_display import GameDisplay
 from sound_manager import SoundManager
+
+# Auto-update system imports with fallbacks
+try:
+    from version_manager import VersionManager
+    from simple_update_checker import SimpleUpdateChecker
+    UPDATE_SYSTEM_AVAILABLE = True
+except ImportError:
+    print("Update system not available - running without auto-updates")
+    VersionManager = None
+    SimpleUpdateChecker = None
+    UPDATE_SYSTEM_AVAILABLE = False
 
 class SnakeGame:
     def __init__(self):
@@ -18,6 +30,16 @@ class SnakeGame:
         self.snake = None
         self.food = None
         self.display = None
+        self.score_manager = None
+        self.sound_manager = SoundManager()
+        
+        # Initialize update system
+        self.version_manager = VersionManager() if VersionManager else None
+        self.update_checker = SimpleUpdateChecker() if SimpleUpdateChecker else None
+        
+        # Check for updates in background after game starts
+        if UPDATE_SYSTEM_AVAILABLE and self.update_checker:
+            self.schedule_update_check()
         self.score_manager = None
         self.sound_manager = None
 
@@ -36,6 +58,22 @@ class SnakeGame:
     def go_right(self):
         """Change snake direction to right"""
         self.snake.change_direction("east")
+
+    def schedule_update_check(self):
+        """Schedule background update check after game starts"""
+        if self.update_checker:
+            self.update_checker.background_update_check()
+    
+    def manual_update_check(self):
+        """Allow user to manually check for updates"""
+        if not UPDATE_SYSTEM_AVAILABLE:
+            print("Update system not available")
+            return
+        
+        if self.update_checker:
+            self.update_checker.manual_update_check()
+        else:
+            print("❌ Update checker not initialized")
 
     def check_collisions(self):
         """Check for collisions with boundaries and food"""
@@ -103,6 +141,10 @@ class SnakeGame:
         # Set up controls
         self.display.setup_controls(self.go_up, self.go_down, self.go_left, self.go_right)
         
+        # Add manual update check (F5 key)
+        if UPDATE_SYSTEM_AVAILABLE:
+            self.display.window.onkey(self.manual_update_check, "F5")
+        
         # Start the game loop
         self.game_loop()
 
@@ -118,6 +160,22 @@ class SnakeGame:
         # Cleanup sound system
         self.sound_manager.cleanup()
 
+# Game version info display
+def show_version_info():
+    """Display version information at startup"""
+    if UPDATE_SYSTEM_AVAILABLE and VersionManager:
+        vm = VersionManager()
+        version_info = vm.get_full_version_info()
+        print(f"\n🐍 Snake Game v{version_info['version']} (Build {version_info['build']})")
+        print(f"📅 Release: {version_info['release_date']}")
+        print("🎮 Press F5 during gameplay to check for updates\n")
+    else:
+        print("\n🐍 Snake Game v1.0.0")
+        print("🎮 Classic Snake Game with Professional Features\n")
+
 if __name__ == "__main__":
+    show_version_info()
+    
+    # Create and run game
     game = SnakeGame()
     game.run_game()

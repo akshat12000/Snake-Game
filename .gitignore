@@ -1,8 +1,44 @@
 # Python cache
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
 
 # Virtual environment
 .venv/
+venv/
 
 # PyInstaller build files
 build/
+dist/
+*.spec
+
+# Update system files
+last_update_check.json
+client_id.json
+SnakeGame_*.exe
+
+# Release builds
+release_build/
+releases/
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Distribution files (but keep snake_icon.ico)
+*.msi
+*.dmg
