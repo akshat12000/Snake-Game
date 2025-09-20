@@ -1,0 +1,1 @@
+web: python update_server_production.py

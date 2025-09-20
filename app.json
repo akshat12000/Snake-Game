@@ -1,0 +1,15 @@
+{
+  "name": "snake-game-update-server",
+  "build": {
+    "env": {
+      "FLASK_ENV": "production"
+    }
+  },
+  "run": {
+    "env": {
+      "FLASK_ENV": "production",
+      "LOG_LEVEL": "INFO",
+      "HOST": "0.0.0.0"
+    }
+  }
+}

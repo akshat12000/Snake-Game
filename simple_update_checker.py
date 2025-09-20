@@ -6,6 +6,7 @@ Provides console-based update checking without Tkinter threading issues
 import threading
 import time
 import json
+import os
 
 try:
     import requests
@@ -16,11 +17,40 @@ except ImportError:
 class SimpleUpdateChecker:
     """Thread-safe update checker that uses console output"""
     
-    def __init__(self, current_version="1.0.0"):
+    def __init__(self, current_version="1.0.0", server_url=None):
         self.current_version = current_version
-        self.update_server_url = "http://localhost:5000"
+        # Support multiple server URL sources (priority order):
+        # 1. Parameter passed to constructor
+        # 2. Environment variable
+        # 3. Configuration file
+        # 4. Default localhost for development
+        self.update_server_url = self._get_server_url(server_url)
         self.last_check_time = 0
         self.check_interval = 300  # 5 minutes
+        
+    def _get_server_url(self, server_url=None):
+        """Get server URL from various sources with fallback priority"""
+        if server_url:
+            return server_url.rstrip('/')
+            
+        # Check environment variable
+        env_url = os.environ.get('UPDATE_SERVER_URL')
+        if env_url:
+            return env_url.rstrip('/')
+            
+        # Check configuration file
+        try:
+            if os.path.exists('config.json'):
+                with open('config.json', 'r') as f:
+                    config = json.load(f)
+                    config_url = config.get('update_server_url')
+                    if config_url:
+                        return config_url.rstrip('/')
+        except (json.JSONDecodeError, FileNotFoundError, KeyError):
+            pass
+            
+        # Default fallback for development
+        return "http://localhost:5000"
         
     def load_current_version(self):
         """Load version from version.json if available"""
@@ -57,7 +87,7 @@ class SimpleUpdateChecker:
         """Synchronously check for updates"""
         if not REQUESTS_AVAILABLE:
             if force_check:
-                print("❌ Update checking requires 'requests' library")
+                print("ERROR: Update checking requires 'requests' library")
             return None
             
         current_time = time.time()
@@ -71,9 +101,13 @@ class SimpleUpdateChecker:
         try:
             current_version = self.load_current_version()
             
-            # Check server for updates
-            response = requests.get(f"{self.update_server_url}/api/check-update", 
-                                  params={'current_version': current_version},
+            if force_check:
+                print(f"INFO: Checking for updates... (Current: v{current_version})")
+                print(f"INFO: Server: {self.update_server_url}")
+            
+            # Check server for updates - updated endpoint for production server
+            response = requests.get(f"{self.update_server_url}/api/version", 
+                                  params={'version': current_version},
                                   timeout=5)
             
             if response.status_code == 200:

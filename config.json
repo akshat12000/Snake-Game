@@ -1,0 +1,6 @@
+{
+    "update_server_url": "http://localhost:5000",
+    "check_interval": 300,
+    "auto_download": false,
+    "notification_enabled": true
+}
