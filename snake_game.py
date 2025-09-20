@@ -10,11 +10,13 @@ from sound_manager import SoundManager
 try:
     from version_manager import VersionManager
     from simple_update_checker import SimpleUpdateChecker
+    from update_dialog import show_manual_update_check
     UPDATE_SYSTEM_AVAILABLE = True
 except ImportError:
     print("Update system not available - running without auto-updates")
     VersionManager = None
     SimpleUpdateChecker = None
+    show_manual_update_check = None
     UPDATE_SYSTEM_AVAILABLE = False
 
 class SnakeGame:
@@ -65,15 +67,16 @@ class SnakeGame:
             self.update_checker.background_update_check()
     
     def manual_update_check(self):
-        """Allow user to manually check for updates"""
+        """Allow user to manually check for updates with GUI"""
         if not UPDATE_SYSTEM_AVAILABLE:
             print("Update system not available")
             return
         
-        if self.update_checker:
-            self.update_checker.manual_update_check()
+        if show_manual_update_check and self.update_checker:
+            # Use the GUI dialog for update checking
+            show_manual_update_check(self.update_checker)
         else:
-            print("❌ Update checker not initialized")
+            print("❌ Update system not properly initialized")
 
     def check_collisions(self):
         """Check for collisions with boundaries and food"""

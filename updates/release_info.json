@@ -1,7 +1,7 @@
 {
-  "version": "2.0.3",
-  "build": "005",
-  "release_date": "2025-09-20T23:30:12.634961",
+  "version": "2.0.4",
+  "build": "006",
+  "release_date": "2025-09-20T23:55:49.195497",
   "files": [
     "SnakeGame.exe",
     "version.json",
