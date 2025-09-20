@@ -52,14 +52,24 @@ class SimpleUpdateChecker:
         # Default fallback for development
         return "http://localhost:5000"
         
-    def load_current_version(self):
-        """Load version from version.json if available"""
+    def load_current_version_info(self):
+        """Load version and build info from version.json"""
         try:
             with open('version.json', 'r') as f:
                 version_data = json.load(f)
-                return version_data.get('version', self.current_version)
+                return {
+                    'version': version_data.get('version', self.current_version),
+                    'build': version_data.get('build', '001')
+                }
         except (FileNotFoundError, json.JSONDecodeError):
-            return self.current_version
+            return {
+                'version': self.current_version,
+                'build': '001'
+            }
+
+    def load_current_version(self):
+        """Load version from version.json if available"""
+        return self.load_current_version_info()['version']
     
     def compare_versions(self, version1, version2):
         """Compare two version strings (returns True if version2 is newer)"""
@@ -99,15 +109,20 @@ class SimpleUpdateChecker:
         self.last_check_time = current_time
         
         try:
-            current_version = self.load_current_version()
+            version_info = self.load_current_version_info()
+            current_version = version_info['version']
+            current_build = version_info['build']
             
             if force_check:
-                print(f"INFO: Checking for updates... (Current: v{current_version})")
+                print(f"INFO: Checking for updates... (Current: v{current_version} build {current_build})")
                 print(f"INFO: Server: {self.update_server_url}")
             
-            # Check server for updates - updated endpoint for production server
+            # Check server for updates - send both version and build
             response = requests.get(f"{self.update_server_url}/api/version", 
-                                  params={'version': current_version},
+                                  params={
+                                      'version': current_version,
+                                      'build': current_build
+                                  },
                                   timeout=5)
             
             if response.status_code == 200:
