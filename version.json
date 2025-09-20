@@ -1,7 +1,7 @@
 {
-  "version": "2.0.0",
-  "build": "002",
-  "release_date": "2025-09-20T22:52:11.454416",
+  "version": "2.0.3",
+  "build": "005",
+  "release_date": "2025-09-20T23:30:12.634961",
   "features": [
     "Classic Snake gameplay with smooth controls",
     "Professional stereo audio system",
@@ -12,6 +12,20 @@
     "Custom window branding"
   ],
   "changelog": [
+    {
+      "version": "2.0.3",
+      "date": "2025-09-20",
+      "changes": [
+        "Updated the title!"
+      ]
+    },
+    {
+      "version": "2.0.2",
+      "date": "2025-09-20",
+      "changes": [
+        "Update the title!"
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "2025-09-20",
