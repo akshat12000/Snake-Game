@@ -11,7 +11,7 @@ class GameDisplay:
     def setup_screen(self):
         """Create and configure the game window"""
         self.window = turtle.Screen()
-        self.window.title("Snake Game")
+        self.window.title("Snake Game V2")
         self.window.bgcolor("white")
         self.window.setup(width=self.WINDOW_WIDTH, height=self.WINDOW_HEIGHT)
         self.window.tracer(0)

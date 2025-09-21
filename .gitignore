@@ -6,3 +6,12 @@ __pycache__/
 
 # PyInstaller build files
 build/
+
+# Environment variables (keep .env.example)
+.env
+
+# Release packages
+releases/
+
+# Local test files
+test_*.exe

@@ -1,0 +1,114 @@
+{
+  "version": "1.0.15",
+  "release_date": "2025-09-21",
+  "changelog": [
+    {
+      "version": "1.0.15",
+      "date": "2025-09-21",
+      "changes": [
+        "Updating the Game title -> testing again V2"
+      ]
+    },
+    {
+      "version": "1.0.14",
+      "date": "2025-09-21",
+      "changes": [
+        "Revert title again!"
+      ]
+    },
+    {
+      "version": "1.0.13",
+      "date": "2025-09-21",
+      "changes": [
+        "Updating the title -> testing!"
+      ]
+    },
+    {
+      "version": "1.0.12",
+      "date": "2025-09-21",
+      "changes": [
+        "Reverting the title changes again + Some Update parsing errors"
+      ]
+    },
+    {
+      "version": "1.0.11",
+      "date": "2025-09-21",
+      "changes": [
+        "Updating the title again -> testing!"
+      ]
+    },
+    {
+      "version": "1.0.10",
+      "date": "2025-09-21",
+      "changes": [
+        "UI feedbacks to user while checking for updates!"
+      ]
+    },
+    {
+      "version": "1.0.9",
+      "date": "2025-09-21",
+      "changes": [
+        "Reverting the title changes!"
+      ]
+    },
+    {
+      "version": "1.0.8",
+      "date": "2025-09-21",
+      "changes": [
+        "Fixes in the publishing!"
+      ]
+    },
+    {
+      "version": "1.0.7",
+      "date": "2025-09-21",
+      "changes": [
+        "Updated the title!"
+      ]
+    },
+    {
+      "version": "1.0.6",
+      "date": "2025-09-21",
+      "changes": [
+        "Update UI Improvements"
+      ]
+    },
+    {
+      "version": "1.0.5",
+      "date": "2025-09-21",
+      "changes": [
+        "Crash fix after game ends!"
+      ]
+    },
+    {
+      "version": "1.0.4",
+      "date": "2025-09-21",
+      "changes": [
+        "Updated ServerName"
+      ]
+    },
+    {
+      "version": "1.0.3",
+      "date": "2025-09-21",
+      "changes": [
+        "Bug fixes and improvements"
+      ]
+    },
+    {
+      "version": "1.0.2",
+      "date": "2025-09-21",
+      "changes": [
+        "Test release - emoji fix"
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "2025-09-21",
+      "changes": [
+        "Test release - emoji fix"
+      ]
+    },
+    "Initial release with core Snake gameplay",
+    "Audio system with sound effects",
+    "High score tracking"
+  ]
+}

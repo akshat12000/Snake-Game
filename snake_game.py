@@ -1,9 +1,12 @@
 import time
+import tkinter as tk
+from tkinter import messagebox
 from score_manager import ScoreManager
 from snake import Snake
 from food import Food
 from game_display import GameDisplay
 from sound_manager import SoundManager
+from update_system import UpdateChecker
 
 class SnakeGame:
     def __init__(self):
@@ -20,6 +23,57 @@ class SnakeGame:
         self.display = None
         self.score_manager = None
         self.sound_manager = None
+        
+        # Update system (separate from game)
+        self.update_checker = UpdateChecker()
+    
+    def show_main_menu(self):
+        """Show main menu with Play Game and Check Updates options"""
+        root = tk.Tk()
+        root.title("Snake Game")
+        root.geometry("350x300")  # Made taller to fit all buttons
+        root.resizable(False, False)
+        
+        # Center the window
+        root.eval('tk::PlaceWindow . center')
+        
+        menu_frame = tk.Frame(root, padx=30, pady=30)
+        menu_frame.pack(expand=True, fill='both')
+        
+        title_label = tk.Label(menu_frame, text="🐍 Snake Game", font=("Arial", 20, "bold"))
+        title_label.pack(pady=(0, 30))
+        
+        play_button = tk.Button(menu_frame, text="Play Game", font=("Arial", 12), 
+                               width=18, height=2, command=lambda: self.start_game(root))
+        play_button.pack(pady=8)
+        
+        update_button = tk.Button(menu_frame, text="Check for Updates", font=("Arial", 12),
+                                 width=18, height=2, command=self.check_updates)
+        update_button.pack(pady=8)
+        
+        quit_button = tk.Button(menu_frame, text="Quit", font=("Arial", 12),
+                               width=18, height=2, command=root.quit)
+        quit_button.pack(pady=8)
+        
+        root.mainloop()
+        
+        # Safely destroy the window
+        try:
+            root.destroy()
+        except tk.TclError:
+            # Window was already destroyed
+            pass
+    
+    def start_game(self, menu_window):
+        """Start the actual game"""
+        menu_window.destroy()
+        self.run_game()
+        # After game ends, show main menu again
+        self.show_main_menu()
+    
+    def check_updates(self):
+        """Check for updates (separate from game logic)"""
+        self.update_checker.check_and_prompt_for_updates()
 
     def go_up(self):
         """Change snake direction to up"""
@@ -120,4 +174,4 @@ class SnakeGame:
 
 if __name__ == "__main__":
     game = SnakeGame()
-    game.run_game()
+    game.show_main_menu()

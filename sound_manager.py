@@ -57,7 +57,7 @@ class SoundManager:
         frames = int(duration * sample_rate)
         
         # Create stereo array (2 channels)
-        arr = np.zeros((frames, 2), dtype=np.float32)  # ✅ Make it 2D for stereo
+        arr = np.zeros((frames, 2), dtype=np.float32)  # Make it 2D for stereo
         
         for i in range(frames):
             sample = np.sin(2 * np.pi * frequency * i / sample_rate)

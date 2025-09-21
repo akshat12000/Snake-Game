@@ -1,0 +1,5 @@
+# Railway auto-deployment requirements
+# Minimal dependencies for the update server
+
+# Environment variable support (optional since we have manual loading)
+python-dotenv==1.0.0
