@@ -108,7 +108,7 @@ class UpdateHandler(BaseHTTPRequestHandler):
                     "version": "1.0.0",
                     "release_date": "2025-09-21",
                     "changelog": [
-                    "Updating the Game title -> testing again V2"
+                    "Added name, special scoring for name, 2nd time play fixes, pause functionality."
                 ]
                 }
             

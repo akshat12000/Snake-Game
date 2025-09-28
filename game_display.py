@@ -7,9 +7,18 @@ class GameDisplay:
         self.WINDOW_HEIGHT = height
         self.window = None
         self.score_display = None
+        self.pause_display = None
         
     def setup_screen(self):
         """Create and configure the game window"""
+        # Clear any existing turtle state
+        import turtle
+        try:
+            # Reset turtle state if needed
+            turtle.resetscreen()
+        except:
+            pass
+            
         self.window = turtle.Screen()
         self.window.title("Snake Game V2")
         self.window.bgcolor("white")
@@ -67,6 +76,36 @@ class GameDisplay:
             self.high_score_display.clear()
             self.high_score_display.write(f"High Score: {high_score}", font=("Arial", 12, "normal"))
 
+    def show_pause_message(self):
+        """Display pause message on screen"""
+        if not self.pause_display:
+            self.pause_display = turtle.Turtle()
+            self.pause_display.hideturtle()
+            self.pause_display.penup()
+            self.pause_display.color("blue")
+        
+        self.pause_display.goto(0, 0)
+        self.pause_display.clear()
+        self.pause_display.write("GAME PAUSED", align="center", font=("Arial", 24, "bold"))
+        
+        # Add instructions
+        instruction_turtle = turtle.Turtle()
+        instruction_turtle.hideturtle()
+        instruction_turtle.penup()
+        instruction_turtle.color("gray")
+        instruction_turtle.goto(0, -40)
+        instruction_turtle.write("Press SPACE to resume", align="center", font=("Arial", 14, "normal"))
+        
+        # Store instruction turtle for cleanup
+        self.pause_instruction = instruction_turtle
+    
+    def hide_pause_message(self):
+        """Hide pause message from screen"""
+        if self.pause_display:
+            self.pause_display.clear()
+        if hasattr(self, 'pause_instruction') and self.pause_instruction:
+            self.pause_instruction.clear()
+
     def show_game_over(self, final_score, high_score, is_new_record):
         """Display game over message on the game screen"""
         # Game over title
@@ -122,13 +161,17 @@ class GameDisplay:
         self.window.update()
         self.window.exitonclick()
     
-    def setup_controls(self, up_func, down_func, left_func, right_func):
+    def setup_controls(self, up_func, down_func, left_func, right_func, pause_func=None):
         """Set up keyboard controls"""
         self.window.listen()
         self.window.onkey(up_func, "Up")
         self.window.onkey(down_func, "Down")
         self.window.onkey(left_func, "Left")
         self.window.onkey(right_func, "Right")
+        
+        # Add pause control if provided
+        if pause_func:
+            self.window.onkey(pause_func, "space")
     
     def update(self):
         """Update the display"""
